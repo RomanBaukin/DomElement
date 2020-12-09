@@ -1,24 +1,27 @@
 'use strict';
 
-const DomElement = function () {
-  this.selector = '';
-  this.height = '';
-  this.width = '';
-  this.bg = '';
-  this.fontSize = '';
+const DomElement = function (selector, height, width, bg, fontSize) {
+  this.selector = selector;
+  this.height = height;
+  this.width = width;
+  this.bg = bg;
+  this.fontSize = fontSize;
 };
 
 DomElement.prototype.createElement = function () {
-  let element = '';
+  let element = '',
+    newElement;
 
   if (this.selector[0] === '.') {
     element = 'div';
+    newElement = document.createElement(element);
+    newElement.className = this.selector.substring(1);
   } else if (this.selector[0] === '#') {
     element = 'p';
+    newElement = document.createElement(element);
+    newElement.id = this.selector.substring(1);
   }
-  const newElement = document.createElement(element);
-  newElement.className = this.selector.substring(1);
-  newElement.innerHTML = 'Привет, Александр! А мы вот тут классами балуемся!';
+  newElement.innerHTML = 'Классная штука - конструкторы!';
   newElement.style.cssText = `height: ${this.height};
     background-color: ${this.bg};
     width: ${this.width};
@@ -27,12 +30,6 @@ DomElement.prototype.createElement = function () {
   document.body.appendChild(newElement);
 };
 
-const firstElement = new DomElement();
-
-firstElement.selector = '#first';
-firstElement.height = '200px';
-firstElement.width = '200px';
-firstElement.bg = 'green';
-firstElement.fontSize = '16px';
+const firstElement = new DomElement('#first', '100px', '100px', 'red', '16px');
 
 firstElement.createElement();
